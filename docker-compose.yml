@@ -4,7 +4,11 @@ services:
         build:
             context: docker
             dockerfile: development/nginx/Dockerfile
+        ports:
+            - "8081:80"
         env_file: .env
+        depends_on:
+            - php-fpm
         volumes:
             - ./:/app
 
@@ -29,10 +33,10 @@ services:
         ports:
             - "3306:3306"
         environment:
-            MYSQL_ROOT_PASSWORD: app
-            MYSQL_USER: root
-            MYSQL_PASSWORD: app
-            MYSQL_DATABASE: app
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
         volumes:
             - mysql:/var/lib/mysql
 
