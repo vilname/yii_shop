@@ -2,14 +2,27 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$eventsWeb = require __DIR__ . '/events-web.php';
 
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        'app\bootstrap\Bootstrap',
+        'app\modules\shop\Bootstrap'
+    ],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+    ],
+    'modules' => [
+        'shop' => [
+            'class' => 'app\modules\shop\Model',
+        ],
+        'notification' => [
+            'class' => 'app\modules\notification\Model',
+        ],
     ],
     'components' => [
         'request' => [
@@ -42,17 +55,20 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+//        'events-web' => $eventsWeb,
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'shop/default' => 'shop/default/index',
             ],
         ],
-        */
     ],
-    'params' => $params,
+//    'events' => $eventsWeb,
+    'params' => $params
 ];
+
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
@@ -61,6 +77,7 @@ if (YII_ENV_DEV) {
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
         //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['172.*'],
     ];
 
     $config['bootstrap'][] = 'gii';
@@ -68,6 +85,7 @@ if (YII_ENV_DEV) {
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
         //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['172.*'],
     ];
 }
 

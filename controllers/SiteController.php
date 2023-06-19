@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\service\SiteService;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -9,6 +10,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use Yiisoft\Config\Config;
+use Yiisoft\Config\ConfigPaths;
 
 class SiteController extends Controller
 {
@@ -61,6 +64,18 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+//        $rootPath = realpath(dirname(Factory::getComposerFile()));
+//
+//        $config = new Config(new ConfigPaths());
+//
+//        $config->get('events-web');
+
+//        dump(Yii::$container->get('mailer'));
+
+//        $service = Yii::$container->get('app\service\SiteService');
+//
+//        dd($service);
+
         return $this->render('index');
     }
 
